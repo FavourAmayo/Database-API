@@ -6,7 +6,7 @@ const paymentsRouter = require("./routes/paymentsRouter");
 const productsRouter = require("./routes/productsRouter");
 const poRouter = require("./routes/products_ordersRouter")
 const bodyParser = require('body-parser');
-//const cors = require("cors");
+const cors = require("cors");
 
 const app = express();
 // var corsOptions = {
@@ -16,9 +16,9 @@ const app = express();
 //     headers: "Origin, X-Requested-With, Content-Type, Accept"
 //   };
 var corsOptions = {
-    origin: "*"
-    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    // headers: "Origin, X-Requested-With, Content-Type, Accept"
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    headers: "Origin, X-Requested-With, Content-Type, Accept"
   };
 
 app.use(express.json());
