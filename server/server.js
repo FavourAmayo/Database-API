@@ -6,30 +6,36 @@ const paymentsRouter = require("./routes/paymentsRouter");
 const productsRouter = require("./routes/productsRouter");
 const poRouter = require("./routes/products_ordersRouter")
 const bodyParser = require('body-parser');
-const cors = require("cors");
+//const cors = require("cors");
 
 const app = express();
+// var corsOptions = {
+//     origin: "*",
+//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//     credentials: true,
+//     headers: "Origin, X-Requested-With, Content-Type, Accept"
+//   };
 var corsOptions = {
-    origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-    credentials: true,
-    headers: "Origin, X-Requested-With, Content-Type, Accept"
+    origin: "*"
+    // methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    // headers: "Origin, X-Requested-With, Content-Type, Accept"
   };
 
 app.use(express.json());
 app.use(bodyParser.json());
-//app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 //app.use(cors());
 
-app.use(function (req, res, next) {
-    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
-    res.header(
-      "Access-Control-Allow-Headers",
-      "Origin, X-Requested-With, Content-Type, Accept"
-    );
-    res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
-    next();
-  });
+// app.use(function (req, res, next) {
+//     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+//     res.header(
+//       "Access-Control-Allow-Headers",
+//       "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     res.header("Access-Control-Allow-Methods", "GET,HEAD,PUT,PATCH,POST,DELETE");
+//     res.header("Access-Control-Allow-Credentials", true);
+//     next();
+//   });
 
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
