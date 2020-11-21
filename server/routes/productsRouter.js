@@ -18,6 +18,19 @@ productsRouter.get('/', (req, res, next) => {
     mysql.pool.query(`SELECT * FROM products;`, (err, results) => {
         if(err){
             console.log(JSON.stringify(err));
+            res.sendStatus(500);
+            res.end();
+        }
+        res.end(JSON.stringify(results));
+    });
+});
+
+productsRouter.get('/search', (req, res, next) => {
+
+    mysql.pool.query(`SELECT * FROM products WHERE name = ?;`,[req.body.name], (err, results) => {
+        if(err){
+            console.log(JSON.stringify(err));
+            res.sendStatus(500);
             res.end();
         }
         res.end(JSON.stringify(results));
@@ -31,6 +44,7 @@ productsRouter.post('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(201);
@@ -44,6 +58,7 @@ productsRouter.put('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(200);
@@ -57,6 +72,7 @@ productsRouter.delete('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(202);

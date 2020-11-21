@@ -8,17 +8,4 @@ var pool = mysql.createPool({
   database        : 'cs340_osagieae'
 });
 
-// let instaDelivery = {};
-
-// instaDelivery.all = () => {
-//     return new Promise((resolve, reject) =>{
-//         pool.query(`SELECT * FROM customers`, (err, results) => {
-//             if(err){
-//                 return reject(err);
-//             }
-//             return resolve(results);
-//         });
-//     });
-// };
 module.exports.pool = pool;
-//module.exports = instaDelivery;

@@ -1,19 +1,32 @@
 const express = require('express');
-const apiRouter = require('./routes');
 const customersRouter = require("./routes/customersRouter");
 const ordersRouter = require("./routes/ordersRouter");
 const deliverersRouter = require("./routes/deliverersRouter");
 const paymentsRouter = require("./routes/paymentsRouter");
 const productsRouter = require("./routes/productsRouter");
 const poRouter = require("./routes/products_ordersRouter")
-let bodyParser = require('body-parser');
+const bodyParser = require('body-parser');
+const cors = require("cors");
 
 const app = express();
+var corsOptions = {
+    origin: "*",
+    credentials: true,
+  };
 
 app.use(express.json());
 app.use(bodyParser.json());
+app.use(cors(corsOptions));
 
-app.use('/api/chirps', apiRouter);
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    next();
+  });
+
 app.use("/customers", customersRouter);
 app.use("/orders", ordersRouter);
 app.use("/deliverers", deliverersRouter);

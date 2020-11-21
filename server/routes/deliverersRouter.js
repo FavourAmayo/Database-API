@@ -16,9 +16,27 @@ deliverersRouter.get("/", (req, res, next) => {
   mysql.pool.query(`SELECT * FROM deliverers;`, (err, results) => {
     if (err) {
       console.log(JSON.stringify(err));
+      res.sendStatus(500);
       res.end();
+      return;
     }
     res.end(JSON.stringify(results));
+    // res.json(results);
+    // return;
+  });
+});
+
+deliverersRouter.get('/search', (req, res, next) => {
+
+  mysql.pool.query(`SELECT * FROM deliverers WHERE firstName = ?;`,[req.body.firstName], (err, results) => {
+      if(err){
+          console.log(JSON.stringify(err));
+          res.sendStatus(500);
+          res.end();
+      }
+      res.end(JSON.stringify(results));
+      // res.json(results);
+      // return;
   });
 });
 
@@ -28,6 +46,7 @@ deliverersRouter.post("/", (req, res, next) => {
   mysql.pool.query(query, inserts, (err, results, fields) => {
     if (err) {
       console.log(JSON.stringify(err));
+      res.sendStatus(500);
       res.end();
     }
     res.sendStatus(201);
@@ -41,6 +60,7 @@ deliverersRouter.put("/", (req, res, next) => {
   mysql.pool.query(query, inserts, (err, results, fields) => {
     if (err) {
       console.log(JSON.stringify(err));
+      res.sendStatus(500);
       res.end();
     }
     res.sendStatus(200);
@@ -53,6 +73,7 @@ deliverersRouter.delete("/", (req, res, next) => {
   mysql.pool.query(query, inserts, (err, results, fields) => {
     if (err) {
       console.log(JSON.stringify(err));
+      res.sendStatus(500);
       res.end();
     }
     res.sendStatus(202);

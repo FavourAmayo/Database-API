@@ -17,6 +17,7 @@ customersRouter.get('/', (req, res, next) => {
     mysql.pool.query(`SELECT * FROM customers;`, (err, results) => {
         if(err){
             console.log(JSON.stringify(err));
+            res.sendStatus(500);
             res.end();
         }
         res.end(JSON.stringify(results));
@@ -29,6 +30,7 @@ customersRouter.post('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(201);
@@ -43,6 +45,7 @@ customersRouter.put('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(200);
@@ -56,6 +59,7 @@ customersRouter.delete('/', (req, res, next) => {
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
+                res.sendStatus(500);
                 res.end();
             }
             res.sendStatus(202);
