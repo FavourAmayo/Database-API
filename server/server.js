@@ -9,16 +9,17 @@ const bodyParser = require('body-parser');
 const cors = require("cors");
 
 const app = express();
-// var corsOptions = {
-//     origin: "*",
-//     methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-//     credentials: true,
-//     headers: "Origin, X-Requested-With, Content-Type, Accept"
-//   };
+var corsOptions = {
+    origin: "*",
+    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    credentials: true,
+    headers: "Origin, X-Requested-With, Content-Type, Accept"
+  };
 
 app.use(express.json());
 app.use(bodyParser.json());
 //app.use(cors(corsOptions));
+app.use(cors());
 
 // app.use(function (req, res, next) {
 //     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
