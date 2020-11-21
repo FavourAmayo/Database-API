@@ -5,57 +5,62 @@ let mysql = require("../db");
 
 const productsRouter = express.Router();
 
-productsRouter.get('/', async(req, res, next) => {
+productsRouter.get('/', (req, res, next) => {
 
-    try{
-        let results = await db.all();
-        res.json(results);
-    }catch(e){
-        console.log(e);
-        res.sendStatus(500);
-    }
+    // try{
+    //     let results = await db.all();
+    //     res.json(results);
+    // }catch(e){
+    //     console.log(e);
+    //     res.sendStatus(500);
+    // }
+
+    mysql.pool.query(`SELECT * FROM products;`, (err, results) => {
+        if(err){
+            console.log(JSON.stringify(err));
+            res.end();
+        }
+        res.end(JSON.stringify(results));
+    });
 });
 
-productsRouter.post('/', async(req, res, next) => {
+productsRouter.post('/', (req, res, next) => {
 
-    return new Promise((resolve, reject) =>{
         var query = "INSERT INTO products (name, description, price, quantity) VALUES  (?, ?, ?, ?);";
 		var inserts = [req.body.name, req.body.description, req.body.price, req.body.quantity];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(201);
         });
-    });
 });
 
-productsRouter.put('/', async(req, res, next) => {
+productsRouter.put('/', (req, res, next) => {
 
-    return new Promise((resolve, reject) =>{
         var query = "UPDATE products SET name = ?, description = ?, price = ?, quantity = ? WHERE productID = ?;";
 		var inserts = [req.body.name, req.body.description, req.body.price, req.body.quantity];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(200);
         });
-    });
 });
 
-productsRouter.delete('/', async(req, res, next) => {
+productsRouter.delete('/', (req, res, next) => {
 
-    return new Promise((resolve, reject) =>{
         var query = "DELETE FROM products WHERE productID = ?;";
 		var inserts = [req.body.productID];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(202);
         });
-    });
 });
 
 module.exports = productsRouter;

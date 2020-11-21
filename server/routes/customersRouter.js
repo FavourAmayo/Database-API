@@ -4,65 +4,62 @@ let mysql = require("../db");
 
 const customersRouter = express.Router();
 
-customersRouter.get('/', async(req, res, next) => {
-
-    try{
-        let results = await db.all();
-        res.json(results);
-    }catch(e){
-        console.log(e);
-        res.sendStatus(500);
-    }
-});
-
-customersRouter.post('/', async(req, res, next) => {
+customersRouter.get('/', (req, res, next) => {
 
     // try{
-    //     let results = await db.one();
+    //     let results = await db.all();
     //     res.json(results);
     // }catch(e){
     //     console.log(e);
     //     res.sendStatus(500);
     // }
 
-    return new Promise((resolve, reject) =>{
+    mysql.pool.query(`SELECT * FROM customers;`, (err, results) => {
+        if(err){
+            console.log(JSON.stringify(err));
+            res.end();
+        }
+        res.end(JSON.stringify(results));
+    });
+});
+
+customersRouter.post('/', (req, res, next) => {
         var query = "INSERT INTO customers (firstName, lastName, email, password, address) VALUES  (?, ?, ?, ?, ?);";
 		var inserts = [req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.address];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(201);
         });
-    });
+   
 });
 
-customersRouter.put('/', async(req, res, next) => {
+customersRouter.put('/', (req, res, next) => {
 
-    return new Promise((resolve, reject) =>{
         var query = "UPDATE customers SET email = ?, password = ? WHERE customerID = ?;";
 		var inserts = [req.body.email, req.body.password, req.body.customerID];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(200);
         });
-    });
 });
 
-customersRouter.delete('/', async(req, res, next) => {
+customersRouter.delete('/', (req, res, next) => {
 
-    return new Promise((resolve, reject) =>{
         var query = "DELETE FROM customers WHERE email = ? AND password = ?;";
 		var inserts = [req.body.email, req.body.password];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
-                return reject(err);
+                console.log(JSON.stringify(err));
+                res.end();
             }
             res.sendStatus(202);
         });
-    });
 });
 
 module.exports = customersRouter;
