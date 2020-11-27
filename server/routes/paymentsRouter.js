@@ -65,7 +65,7 @@ paymentsRouter.put("/", (req, res, next) => {
 
 paymentsRouter.delete("/", (req, res, next) => {
   var query = "DELETE FROM payments WHERE paymentID = ?;";
-  var inserts = [req.body.orderID];
+  var inserts = [req.body.paymentID];
   mysql.pool.query(query, inserts, (err, results, fields) => {
     if (err) {
       console.log(JSON.stringify(err));
