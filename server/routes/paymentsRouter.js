@@ -52,6 +52,7 @@ paymentsRouter.put("/", (req, res, next) => {
     req.body.bank,
     req.body.ccv,
     req.body.expirationDate,
+    req.body.paymentID
   ];
   mysql.pool.query(query, inserts, (err, results, fields) => {
     if (err) {
