@@ -40,8 +40,8 @@ customersRouter.post('/', (req, res, next) => {
 
 customersRouter.put('/', (req, res, next) => {
 
-        var query = "UPDATE customers SET email = ?, password = ? WHERE customerID = ?;";
-		var inserts = [req.body.email, req.body.password, req.body.customerID];
+        var query = "UPDATE customers SET firstName= ?, lastName = ?, email = ?, password = ?, address = ? WHERE customerID = ?;";
+		var inserts = [req.body.firstName, req.body.lastName, req.body.email, req.body.password, req.body.address, req.body.customerID];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
