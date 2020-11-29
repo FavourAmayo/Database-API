@@ -54,7 +54,7 @@ productsRouter.post('/', (req, res, next) => {
 productsRouter.put('/', (req, res, next) => {
 
         var query = "UPDATE products SET name = ?, description = ?, price = ?, quantity = ? WHERE productID = ?;";
-		var inserts = [req.body.name, req.body.description, req.body.price, req.body.quantity];
+		var inserts = [req.body.name, req.body.description, req.body.price, req.body.quantity, req.body.productID];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
