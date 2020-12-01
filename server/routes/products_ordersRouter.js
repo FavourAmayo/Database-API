@@ -42,7 +42,7 @@ products_ordersRouter.post('/', (req, res, next) => {
 products_ordersRouter.put('/', (req, res, next) => {
 
         var query = "UPDATE products_orders SET productID = ? WHERE orderID = ? and productID = ?;";
-		var inserts = [req.body.productID, req.body.orderID, req.body.productID];
+		var inserts = [req.body.productID, req.body.orderID, req.body.newProductID];
         mysql.pool.query(query, inserts, (err, results, fields) => {
             if(err){
                 console.log(JSON.stringify(err));
