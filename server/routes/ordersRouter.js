@@ -84,7 +84,8 @@ ordersRouter.put("/", (req, res, next) => {
         var query =
           "UPDATE orders SET delivererID = ?, deliveryStatus = ?, departureTime = ?, arrivalTime = ? WHERE orderID = ?;";
 
-        let delivererID = req.body.delivererID || current.delivererID;
+        // let delivererID = req.body.delivererID || current.delivererID;
+        let delivererID = req.body.delivererID;
         let deliveryStatus = req.body.deliveryStatus || current.deliveryStatus;
         let departureTime = req.body.departureTime || current.departureTime;
         let arrivalTime = req.body.arrivalTime || current.arrivalTime;
